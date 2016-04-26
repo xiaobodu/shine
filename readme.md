@@ -27,7 +27,7 @@
 
     另一方面，每个node都会将从client收到的消息通过zmq.PUSH到worker。
 
-    同时，node也会通过zmq.SUB，从forwarder初监听仅属于自己node_id的消息。
+    同时，node也会通过zmq.SUB，从forwarder处监听仅属于自己node_id的消息。
 
 
 2. worker
