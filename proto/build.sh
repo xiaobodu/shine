@@ -1,5 +1,3 @@
 #!/bin/sh
 
-rm -rf python cpp
-mkdir -p python cpp
-protoc -I=. --python_out=python --cpp_out=cpp ./shine.proto
+protoc -I=. --python_out=../shine/share/ ./shine.proto
