@@ -34,7 +34,7 @@ class Request(object):
         self.task = task
         # 赋值
         self.is_valid = self._parse_raw_data()
-        self.trigger = Trigger(self.app.box_class, zmq_client=self.app.forwarder_client)
+        self.trigger = Trigger(self.app.box_class, forwarder_input_client=self.app.forwarder_client)
 
     @property
     def app(self):

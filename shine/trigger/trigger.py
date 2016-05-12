@@ -9,18 +9,18 @@ class Trigger(object):
 
     box_class = None
 
-    zmq_client = None
+    forwarder_input_client = None
 
-    def __init__(self, box_class=None, forwarder_input_address_list=None, zmq_client=None, use_gevent=False):
+    def __init__(self, box_class=None, forwarder_input_address_list=None, forwarder_input_client=None, use_gevent=False):
         """
         :param box_class: module or string
         :param forwarder_input_address_list:
-        :param zmq_client:
+        :param forwarder_input_client:
         :param use_gevent:
         :return:
         """
 
-        assert not (forwarder_input_address_list is zmq_client is None)
+        assert not (forwarder_input_address_list is forwarder_input_client is None)
 
         self.box_class = import_module_or_string(box_class or constants.DEFAULT_CONFIG['BOX_CLASS'])
 
@@ -31,11 +31,11 @@ class Trigger(object):
                 import zmq
 
             ctx = zmq.Context()
-            self.zmq_client = ctx.socket(zmq.PUSH)
+            self.forwarder_input_client = ctx.socket(zmq.PUSH)
             for address in forwarder_input_address_list:
-                self.zmq_client.connect(address)
+                self.forwarder_input_client.connect(address)
         else:
-            self.zmq_client = zmq_client
+            self.forwarder_input_client = forwarder_input_client
 
     def write_to_users(self, data_list):
         """
@@ -161,4 +161,4 @@ class Trigger(object):
         :return:
         """
 
-        return self.zmq_client.send(task.SerializeToString())
+        return self.forwarder_input_client.send(task.SerializeToString())
