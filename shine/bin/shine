@@ -99,6 +99,10 @@ def clean(config):
     """
     清除数据
     """
+    import os
+    import sys
+    # 必须要将当前所在路径放进来，否则找不到
+    sys.path.append(os.getcwd())
     from shine.share.cleaner import Cleaner
     app = Cleaner()
 
