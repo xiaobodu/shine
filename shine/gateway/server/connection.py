@@ -27,7 +27,7 @@ class Connection(object):
         self.stream = stream
         self.address = address
         self.expire_timer = Timer()
-        self._reg_timeout_callback()
+        self._set_expire_callback()
         self.app.events.create_conn(self)
 
     def write(self, data):
@@ -85,6 +85,8 @@ class Connection(object):
     def _on_connection_close(self):
         # 链接被关闭的回调
 
+        self._clear_expire_callback()
+
         self.app.events.close_conn(self)
 
     def _on_read_complete(self, box):
@@ -95,7 +97,7 @@ class Connection(object):
         """
 
         # 每收到一次消息，就进行一次延后
-        self._reg_timeout_callback()
+        self._set_expire_callback()
 
         try:
             self.app.events.handle_request(self, box)
@@ -103,7 +105,7 @@ class Connection(object):
             logger.error('view_func raise exception. box: %s, e: %s',
                          box, e, exc_info=True)
 
-    def _reg_timeout_callback(self):
+    def _set_expire_callback(self):
         """
         注册超时的回调
         :return:
@@ -111,6 +113,9 @@ class Connection(object):
         if self.app.conn_timeout:
             # 超时了，就报错
             self.expire_timer.set(self.app.conn_timeout, self.close)
+
+    def _clear_expire_callback(self):
+        self.expire_timer.clear()
 
     def __repr__(self):
         return str(self.id)
