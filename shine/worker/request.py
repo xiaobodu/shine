@@ -149,4 +149,6 @@ class Request(object):
             return True
 
     def __repr__(self):
-        return 'cmd: %r, endpoint: %s, task:\n%s' % (self.cmd, self.endpoint, self.task)
+        return '<%s cmd: %r, endpoint: %s, app: %s, task:\n%s>' % (
+            type(self).__name__, self.cmd, self.endpoint, self.app, self.task
+        )

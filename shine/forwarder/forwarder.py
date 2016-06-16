@@ -328,3 +328,8 @@ class Forwarder(object):
         signal.signal(signal.SIGINT, exit_handler)
         signal.signal(signal.SIGQUIT, exit_handler)
         signal.signal(signal.SIGTERM, exit_handler)
+
+    def __repr__(self):
+        return '<%s name: %s>' % (
+            type(self).__name__, self.name
+        )

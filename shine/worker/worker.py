@@ -264,3 +264,8 @@ class Worker(RoutesMixin, AppEventsMixin):
         self.forwarder_client = ctx.socket(zmq.PUSH)
         for address in self.config['FORWARDER_INPUT_ADDRESS_LIST']:
             self.forwarder_client.connect(address)
+
+    def __repr__(self):
+        return '<%s name: %s>' % (
+            type(self).__name__, self.name
+        )
