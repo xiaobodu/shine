@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+NAME = 'normal_demo'
+
 
 GATEWAY_OUTER_HOST = '127.0.0.1'
 GATEWAY_OUTER_PORT = 7100
