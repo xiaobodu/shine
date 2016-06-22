@@ -40,8 +40,8 @@ class Trigger(object):
     def write_to_users(self, data_list):
         """
         格式为
-        [(uids, box), (uids, box, userdata) ...]
-        :param data_list: userdata可不传，默认为0，conn.userdata & userdata == userdata
+        [(uids, box), (uids, box, userdata), (uids, box, userdata, exclude) ...]
+        :param data_list: userdata可不传，默认为0，conn.userdata & userdata == userdata; exclude 代表排除的uid列表
         :return:
         """
 
@@ -51,8 +51,12 @@ class Trigger(object):
             if len(data_tuple) == 2:
                 uids, data = data_tuple
                 userdata = None
-            else:
+                exclude = None
+            elif len(data_tuple) == 3:
                 uids, data, userdata = data_tuple
+                exclude = None
+            else:
+                uids, data, userdata, exclude = data_tuple
 
             if isinstance(data, self.box_class):
                 data = data.pack()
@@ -63,6 +67,8 @@ class Trigger(object):
             row.buf = data
             row.userdata = userdata or 0
             row.uids.extend(uids)
+            if exclude:
+                row.exclude.extend(exclude)
 
         task = Task()
         task.cmd = constants.CMD_WRITE_TO_USERS
@@ -70,10 +76,12 @@ class Trigger(object):
 
         return self._send_task(task)
 
-    def close_users(self, uids, userdata=None):
+    def close_users(self, uids, userdata=None, exclude=None):
         msg = CloseUsers()
         msg.uids.extend(uids)
         msg.userdata = userdata or 0
+        if exclude:
+            msg.exclude.extend(exclude)
 
         task = Task()
         task.cmd = constants.CMD_CLOSE_USERS
