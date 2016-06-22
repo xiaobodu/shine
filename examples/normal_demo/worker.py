@@ -4,6 +4,7 @@
 import sys
 sys.path.insert(0, '../../')
 
+import time
 from shine import Worker, logger
 
 
@@ -29,27 +30,44 @@ def reg(request):
 
 @app.route(2)
 def login(request):
-
-    request.login_client(request.box.get_json()['uid'], 2)
+    logger.error("login: %s", request)
+    uid = request.box.get_json()["uid"]
+    if uid == 1:
+        request.login_client(uid, 1)
+    elif uid == 2:
+        request.login_client(uid, 2)
+    elif uid == 3:
+        request.login_client(uid)
+    else:
+        # 不登录
+        request.write_to_client(dict(
+            ret=100,
+        ))
+        return
+        
+    # time.sleep(40)
     # request.logout_client()
     request.write_to_client(dict(
-        ret=100,
-        body='ok'
+        ret=0,
+        body="login %s" % uid
     ))
 
 
 @app.route(3)
-def write_to_users(request):
-    request.write_to_users([
-        ((1, 2), dict(
-            ret=0,
-            body='from app'
-        )),
-    ])
-    request.write_to_client(dict(
-        ret=100,
-        body='ok'
-    ))
+def handle_users(request):
+    jdata = request.box.get_json()
+
+    uids = jdata['uids']
+    userdata = jdata['userdata']
+    exclude = jdata['exclude']
+    op_type = jdata['op_type']
+
+    if op_type == 'write':
+        request.write_to_users([
+            (uids, dict(cmd=1, body='from request: %s' % int(time.time())), userdata, exclude)
+        ])
+    else:
+        request.close_users(uids, userdata, exclude)
 
 
 @app.route(4)

@@ -160,6 +160,10 @@ class Forwarder(object):
                             continue
 
                         for uid in uid_list:
+                            if uid in row.exclude:
+                                # 如果是在exclude列表里面的话，就可以不用处理
+                                continue
+
                             node_id = node_id_to_uid_dict.get(uid)
                             if node_id is None:
                                 continue
@@ -168,6 +172,7 @@ class Forwarder(object):
                                 new_row = shine_pb2.RspToUsers.Row()
                                 new_row.userdata = row.userdata
                                 new_row.buf = row.buf
+                                new_row.exclude = row.exclude
                                 node_id_to_row_dict[node_id] = new_row
                             else:
                                 new_row = node_id_to_row_dict[node_id]
@@ -208,6 +213,10 @@ class Forwarder(object):
                         node_id_to_uid_dict = self.share_store.get_users(merged_uid_list)
 
                         for uid in merged_uid_list:
+                            if uid in rsp.exclude:
+                                # 在排除列表里
+                                continue
+
                             node_id = node_id_to_uid_dict.get(uid)
                             if node_id is None:
                                 continue
@@ -215,6 +224,7 @@ class Forwarder(object):
                             if node_id not in node_id_to_rsp_dict:
                                 new_rsp = shine_pb2.CloseUsers()
                                 new_rsp.userdata = rsp.userdata
+                                new_rsp.exclude = rsp.exclude
                                 node_id_to_rsp_dict[node_id] = new_rsp
                             else:
                                 new_rsp = node_id_to_rsp_dict[node_id]

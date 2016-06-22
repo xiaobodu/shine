@@ -119,15 +119,15 @@ class Request(object):
     def write_to_users(self, data_list):
         """
         格式为
-        [(uids, box), (uids, box, userdata) ...]
-        :param data_list: userdata可不传，默认为0，conn.userdata & userdata == userdata
+        [(uids, box), (uids, box, userdata), (uids, box, userdata, exclude) ...]
+        :param data_list: userdata可不传，默认为0，conn.userdata & userdata == userdata; exclude 代表排除的uid列表
         :return:
         """
 
         return self.trigger.write_to_users(data_list)
 
-    def close_users(self, uids, userdata=None):
-        return self.trigger.close_users(uids, userdata)
+    def close_users(self, uids, userdata=None, exclude=None):
+        return self.trigger.close_users(uids, userdata, exclude)
 
     def write_to_worker(self, data):
         """
