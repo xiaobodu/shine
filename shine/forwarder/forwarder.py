@@ -160,6 +160,10 @@ class Forwarder(object):
                             continue
 
                         for uid in uid_list:
+                            if uid in row.exclude:
+                                # 如果是在exclude列表里面的话，就可以不用处理
+                                continue
+
                             node_id = node_id_to_uid_dict.get(uid)
                             if node_id is None:
                                 continue
@@ -209,6 +213,10 @@ class Forwarder(object):
                         node_id_to_uid_dict = self.share_store.get_users(merged_uid_list)
 
                         for uid in merged_uid_list:
+                            if uid in rsp.exclude:
+                                # 在排除列表里
+                                continue
+
                             node_id = node_id_to_uid_dict.get(uid)
                             if node_id is None:
                                 continue
