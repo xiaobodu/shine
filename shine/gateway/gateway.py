@@ -202,11 +202,13 @@ class Gateway(object):
             for row in rsp.rows:
                 if constants.CONNS_AUTHED in row.uids:
                     for conn in self.conn_dict.values():
-                        if conn and conn.uid and (conn.userdata & row.userdata) == row.userdata:
+                        if conn and conn.uid and (conn.userdata & row.userdata) == row.userdata and \
+                                        conn.uid not in row.exclude:
                             conn.write(row.buf)
                 elif constants.CONNS_ALL in row.uids:
                     for conn in self.conn_dict.values():
-                        if conn and (conn.userdata & row.userdata) == row.userdata:
+                        if conn and (conn.userdata & row.userdata) == row.userdata and \
+                                        conn.uid not in row.exclude:
                             conn.write(row.buf)
                 elif constants.CONNS_UNAUTHED in row.uids:
                     for conn in self.conn_dict.values():
@@ -215,7 +217,8 @@ class Gateway(object):
                 else:
                     for uid in row.uids:
                         conn = self.user_dict.get(uid)
-                        if conn and (conn.userdata & row.userdata) == row.userdata:
+                        if conn and (conn.userdata & row.userdata) == row.userdata and \
+                                        conn.uid not in row.exclude:
                             conn.write(row.buf)
 
         elif task.cmd == constants.CMD_CLOSE_USERS:
@@ -224,11 +227,13 @@ class Gateway(object):
 
             if constants.CONNS_AUTHED in rsp.uids:
                 for conn in self.conn_dict.values():
-                    if conn and conn.uid and (conn.userdata & rsp.userdata) == rsp.userdata:
+                    if conn and conn.uid and (conn.userdata & rsp.userdata) == rsp.userdata and \
+                                    conn.uid not in rsp.exclude:
                         conn.close()
             elif constants.CONNS_ALL in rsp.uids:
                 for conn in self.conn_dict.values():
-                    if conn and (conn.userdata & rsp.userdata) == rsp.userdata:
+                    if conn and (conn.userdata & rsp.userdata) == rsp.userdata and \
+                                    conn.uid not in rsp.exclude:
                         conn.close()
             elif constants.CONNS_UNAUTHED in rsp.uids:
                 for conn in self.conn_dict.values():
@@ -237,7 +242,8 @@ class Gateway(object):
             else:
                 for uid in rsp.uids:
                     conn = self.user_dict.get(uid)
-                    if conn and (conn.userdata & rsp.userdata) == rsp.userdata:
+                    if conn and (conn.userdata & rsp.userdata) == rsp.userdata and \
+                                    conn.uid not in rsp.exclude:
                         conn.close()
 
     def _send_task_to_worker(self):
