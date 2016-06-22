@@ -1,7 +1,7 @@
-package shine.gw_proto;
+package shine.proto;
 
-option java_package="cn.vimer.shine.gw_proto";
-option java_outer_classname="GWProto";
+option java_package="cn.vimer.shine.proto";
+option java_outer_classname="Proto";
 
 // 封装的Task
 message Task {
