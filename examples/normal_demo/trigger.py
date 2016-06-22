@@ -11,9 +11,10 @@ import config
 
 def send_data(trigger):
 
-    # uids = [constants.CONNS_AUTHED]
-    uids = [constants.CONNS_ALL]
+    uids = [constants.CONNS_AUTHED]
+    # uids = [constants.CONNS_ALL]
     # uids = [constants.CONNS_UNAUTHED]
+    # uids = [1, 2, 3]
 
     userdata = 0
     # userdata = 1
