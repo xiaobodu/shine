@@ -17,9 +17,10 @@ message Task {
 
 message RspToUsers {
     message Row {
-        repeated int64 uids = 1;   // 发送用户列表
+        repeated int64 uids = 1;        // 发送用户列表
         optional bytes buf = 2;
-        optional int64 userdata = 3; // 过滤userdata
+        optional int64 userdata = 3;    // 过滤userdata
+        repeated int64 exclude = 4;     // 排除用户列表
     }
 
     repeated Row rows = 1;
@@ -28,4 +29,5 @@ message RspToUsers {
 message CloseUsers {
     repeated int64 uids = 1;
     optional int64 userdata = 2; // 过滤userdata
+    repeated int64 exclude = 3;
 }

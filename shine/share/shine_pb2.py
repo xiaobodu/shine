@@ -13,7 +13,7 @@ from google.protobuf import descriptor_pb2
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='shine.proto',
   package='shine.gw_proto',
-  serialized_pb='\n\x0bshine.proto\x12\x0eshine.gw_proto\"\x8c\x01\n\x04Task\x12\x0f\n\x07node_id\x18\x01 \x01(\x0c\x12\x11\n\tclient_id\x18\x02 \x01(\x0c\x12\x11\n\tclient_ip\x18\x03 \x01(\t\x12\r\n\x05inner\x18\x04 \x01(\x05\x12\x0b\n\x03\x63md\x18\x05 \x01(\x05\x12\x0e\n\x03uid\x18\x06 \x01(\x03:\x01\x30\x12\x13\n\x08userdata\x18\x07 \x01(\x03:\x01\x30\x12\x0c\n\x04\x62ody\x18\x08 \x01(\x0c\"n\n\nRspToUsers\x12,\n\x04rows\x18\x01 \x03(\x0b\x32\x1e.shine.gw_proto.RspToUsers.Row\x1a\x32\n\x03Row\x12\x0c\n\x04uids\x18\x01 \x03(\x03\x12\x0b\n\x03\x62uf\x18\x02 \x01(\x0c\x12\x10\n\x08userdata\x18\x03 \x01(\x03\",\n\nCloseUsers\x12\x0c\n\x04uids\x18\x01 \x03(\x03\x12\x10\n\x08userdata\x18\x02 \x01(\x03\x42\"\n\x17\x63n.vimer.shine.gw_protoB\x07GWProto')
+  serialized_pb='\n\x0bshine.proto\x12\x0eshine.gw_proto\"\x8c\x01\n\x04Task\x12\x0f\n\x07node_id\x18\x01 \x01(\x0c\x12\x11\n\tclient_id\x18\x02 \x01(\x0c\x12\x11\n\tclient_ip\x18\x03 \x01(\t\x12\r\n\x05inner\x18\x04 \x01(\x05\x12\x0b\n\x03\x63md\x18\x05 \x01(\x05\x12\x0e\n\x03uid\x18\x06 \x01(\x03:\x01\x30\x12\x13\n\x08userdata\x18\x07 \x01(\x03:\x01\x30\x12\x0c\n\x04\x62ody\x18\x08 \x01(\x0c\"\x7f\n\nRspToUsers\x12,\n\x04rows\x18\x01 \x03(\x0b\x32\x1e.shine.gw_proto.RspToUsers.Row\x1a\x43\n\x03Row\x12\x0c\n\x04uids\x18\x01 \x03(\x03\x12\x0b\n\x03\x62uf\x18\x02 \x01(\x0c\x12\x10\n\x08userdata\x18\x03 \x01(\x03\x12\x0f\n\x07\x65xclude\x18\x04 \x03(\x03\"=\n\nCloseUsers\x12\x0c\n\x04uids\x18\x01 \x03(\x03\x12\x10\n\x08userdata\x18\x02 \x01(\x03\x12\x0f\n\x07\x65xclude\x18\x03 \x03(\x03\x42\"\n\x17\x63n.vimer.shine.gw_protoB\x07GWProto')
 
 
 
@@ -123,6 +123,13 @@ _RSPTOUSERS_ROW = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='exclude', full_name='shine.gw_proto.RspToUsers.Row.exclude', index=3,
+      number=4, type=3, cpp_type=2, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -133,7 +140,7 @@ _RSPTOUSERS_ROW = _descriptor.Descriptor(
   is_extendable=False,
   extension_ranges=[],
   serialized_start=234,
-  serialized_end=284,
+  serialized_end=301,
 )
 
 _RSPTOUSERS = _descriptor.Descriptor(
@@ -160,7 +167,7 @@ _RSPTOUSERS = _descriptor.Descriptor(
   is_extendable=False,
   extension_ranges=[],
   serialized_start=174,
-  serialized_end=284,
+  serialized_end=301,
 )
 
 
@@ -185,6 +192,13 @@ _CLOSEUSERS = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='exclude', full_name='shine.gw_proto.CloseUsers.exclude', index=2,
+      number=3, type=3, cpp_type=2, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -194,8 +208,8 @@ _CLOSEUSERS = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=286,
-  serialized_end=330,
+  serialized_start=303,
+  serialized_end=364,
 )
 
 _RSPTOUSERS_ROW.containing_type = _RSPTOUSERS;
