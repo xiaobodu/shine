@@ -153,8 +153,11 @@ class Worker(RoutesMixin, AppEventsMixin):
 
         def start_worker_process():
             args = [sys.executable] + sys.argv
-            inner_p = subprocess.Popen(args, env=worker_env)
-            return inner_p
+            try:
+                return subprocess.Popen(args, env=worker_env)
+            except:
+                logger.error('exc occur.', exc_info=True)
+                return None
 
         for it in xrange(0, workers):
             p = start_worker_process()
