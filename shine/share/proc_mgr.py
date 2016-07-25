@@ -25,7 +25,7 @@ class ProcMgr(object):
             except:
                 # 因为很有可能遇到文件句柄不够用的情况
                 # 而不进行任何异常捕获的话，会导致master进程死掉
-                logger.error('exc occur.target: %s, index: %s', target, index, exc_info=True)
+                logger.error('exc occur. target: %s, index: %s', target, index, exc_info=True)
                 return None
 
         for it in xrange(0, workers):
