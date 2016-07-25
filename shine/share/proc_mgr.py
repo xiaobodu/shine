@@ -2,6 +2,7 @@
 
 from multiprocessing import Process
 import time
+from log import logger
 
 
 class ProcMgr(object):
@@ -13,13 +14,19 @@ class ProcMgr(object):
 
     def spawn_workers(self, workers, target):
         def start_worker_process(index):
-            inner_p = Process(target=target, args=(index,))
-            # 当前进程daemon默认是False，改成True将启动不了子进程
-            # 但是子进程要设置daemon为True，这样父进程退出，子进程会被强制关闭
-            # 现在父进程会在子进程之后推出，没必要设置了
-            # inner_p.daemon = True
-            inner_p.start()
-            return inner_p
+            try:
+                inner_p = Process(target=target, args=(index,))
+                # 当前进程daemon默认是False，改成True将启动不了子进程
+                # 但是子进程要设置daemon为True，这样父进程退出，子进程会被强制关闭
+                # 现在父进程会在子进程之后推出，没必要设置了
+                # inner_p.daemon = True
+                inner_p.start()
+                return inner_p
+            except:
+                # 因为很有可能遇到文件句柄不够用的情况
+                # 而不进行任何异常捕获的话，会导致master进程死掉
+                logger.error('exc occur.target: %s, index: %s', target, index, exc_info=True)
+                return None
 
         for it in xrange(0, workers):
             p = start_worker_process(it)
