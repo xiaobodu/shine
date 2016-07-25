@@ -156,7 +156,7 @@ class Worker(RoutesMixin, AppEventsMixin):
             try:
                 return subprocess.Popen(args, env=worker_env)
             except:
-                logger.error('exc occur.', exc_info=True)
+                logger.error('exc occur. args: %s, env: %s', args, worker_env, exc_info=True)
                 return None
 
         for it in xrange(0, workers):
