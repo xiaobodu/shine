@@ -66,11 +66,11 @@ def forwarder(config):
 
 
 @cli.command()
-@click.option('-a', '--app', help='app. worker:app/worker.app/worker', required=True)
+@click.option('-a', '--app', help='app. processor:app/processor.app/processor', required=True)
 @click.option('-c', '--config', help='config file', required=False)
-def worker(app, config):
+def processor(app, config):
     """
-    启动worker
+    启动processor
     """
     import os
     import sys
