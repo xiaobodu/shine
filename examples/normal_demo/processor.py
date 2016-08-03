@@ -5,10 +5,10 @@ import sys
 sys.path.insert(0, '../../')
 
 import time
-from shine import Worker, logger
+from shine import Processor, logger
 
 
-app = Worker()
+app = Processor()
 
 
 @app.create_client

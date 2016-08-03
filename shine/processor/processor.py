@@ -19,7 +19,7 @@ from ..share.config import ConfigAttribute, Config
 from ..share.utils import import_module_or_string
 
 
-class Worker(RoutesMixin, AppEventsMixin):
+class Processor(RoutesMixin, AppEventsMixin):
     ############################## configurable begin ##############################
 
     # 显示的进程名
@@ -86,13 +86,13 @@ class Worker(RoutesMixin, AppEventsMixin):
                         self.debug, self.spawn_count)
 
             # 设置进程名
-            setproctitle.setproctitle(self._make_proc_name('worker:master'))
+            setproctitle.setproctitle(self._make_proc_name('processor:master'))
             # 只能在主线程里面设置signals
             self._handle_parent_proc_signals()
             self._spawn_workers(self.spawn_count)
         else:
             # 子进程
-            setproctitle.setproctitle(self._make_proc_name('worker:worker'))
+            setproctitle.setproctitle(self._make_proc_name('processor:worker'))
             self._worker_run()
 
     def _make_proc_name(self, subtitle):
